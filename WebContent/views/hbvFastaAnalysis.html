@@ -1,0 +1,141 @@
+<div>
+	<div nv-file-drop="" uploader="uploader"
+		filters="queueLimit, customFilter">
+		<h2>Automated genotyping and interpretation</h2>
+			Submit your sequence files in FASTA nucleotide format for basic
+			analysis of the genotype, drug resistance and vaccine escape interpretation. <small><br />For testing, download this
+				<a ng-click="downloadExampleSequence()">example sequence file</a>
+				and submit it for analysis.</small>
+		</p>
+		
+		
+		<div>
+			<div>
+
+				<table class="table" width="100%">
+					<thead>
+					<col width="40%"></col>
+					<col width="8%"></col>
+					<col width="32%"></col>
+					<col width="20%"></col>
+					<tr>
+						<th>File</th>
+						<th ng-show="uploader.isHTML5">Size</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in uploader.queue">
+							<td><strong>{{ item.file.name }}</strong></td>
+							<td ng-show="uploader.isHTML5" nowrap>{{
+								item.file.size/1024/1024|number:2 }} MB</td>
+							<td>
+								<span ng-if="item.requestStatus.code == 'COMPLETE' && item.response != null">
+									<span class="glyphicon glyphicon-ok"></span>
+									&nbsp;Complete
+								</span>
+								<span ng-if="item.requestStatus.code == 'COMPLETE' && item.commandError != null">
+									<span class="glyphicon glyphicon-exclamation-sign"></span>
+									&nbsp;Error
+								</span>
+								<span ng-if="item.requestStatus.code == 'COMPLETE' && item.response == null && item.commandError == null">
+									<span class="glyphicon glyphicon-cog"></span>
+									&nbsp;Running: retrieving result
+								</span>
+								<span ng-if="item.requestStatus.code == 'UPLOADING'">
+									<span class="glyphicon glyphicon-transfer"></span>
+									&nbsp;Uploading sequence data
+								</span>
+								<span ng-if="item.requestStatus.code == 'QUEUED'">
+									<span class="glyphicon glyphicon-hourglass"></span>
+									&nbsp;Position {{ item.requestStatus.placeInQueue+1 }} in request queue
+								</span>
+								<span ng-if="item.requestStatus.code == 'RUNNING'">
+									<span class="glyphicon glyphicon-cog"></span>
+									&nbsp;Running: {{ item.requestStatus.runningDescription }}
+								</span>
+							</td>
+							<td nowrap>
+								<button type="button" class="btn btn-primary btn-xs"
+									ng-click="item.upload()"
+									ng-disabled="item.isReady || item.isUploading || (item.isSuccess && item.commandError == null)">
+									<span class="glyphicon glyphicon-upload"></span> Submit
+								</button>
+								<button ng-if="item.commandError == null" type="button" class="btn btn-primary btn-xs"
+									ng-click="showAnalysisResults(item)"
+									ng-disabled="item.response == null">
+									<span class="glyphicon glyphicon-list"></span> Show result
+								</button>
+								<button ng-if="item.commandError != null" type="button" class="btn btn-danger btn-xs"
+									ng-click="showError(item)">
+									<span class="glyphicon glyphicon-list"></span> Show result
+								</button>
+								<button type="button" class="btn btn-primary btn-xs"
+									ng-click="removeItem(item)"
+									ng-disabled="item.response == null && item.commandError == null">
+									<span class="glyphicon glyphicon-trash"></span> Remove
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div>
+					<label class="btn btn-primary" for="my-file-selector"> <input
+						id="my-file-selector" type="file" nv-file-select=""
+						uploader="uploader" multiple style="display: none;"> <span
+						class="glyphicon glyphicon-plus-sign"></span> Add files
+					</label>
+					<button type="button" class="btn btn-primary btn-s"
+						ng-click="uploader.uploadAll()"
+						ng-disabled="!uploader.getNotUploadedItems().length">
+						<span class="glyphicon glyphicon-upload"></span> Submit all files
+					</button>
+					<button type="button" class="btn btn-primary btn-s"
+						ng-click="removeAll()" ng-disabled="!uploader.queue.length">
+						<span class="glyphicon glyphicon-trash"></span> Remove all files
+					</button>
+				</div>
+
+			</div>
+
+			<div ng-show="fileItemUnderAnalysis">
+				<hr />
+				<h4>Analysis of sequence file
+					'{{fileItemUnderAnalysis.file.name}}'</h4>
+					<p>
+						<div class="btn-group">
+					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'summary'">Summary</label>
+						</div>
+					</p>
+				<div ng-show="displaySection == 'summary'">
+
+					<p>
+					<table class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th rowspan="2" style="width: 8%;">Sequence</th>
+								<th rowspan="2" style="width: 8%;">Identified as HBV?</th>
+								<th rowspan="2" style="width: 8%;">Genotype</th>
+								<th rowspan="2" style="width: 12%;">Full report</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="hdrResult in fileItemUnderAnalysis.response.hdrWebReport.results track by $index">
+								<td>{{hdrResult.hdrReport.sequenceResult.id}}</td>
+								<td>{{getIsHbv(hdrResult.hdrReport.sequenceResult)}}</td>
+								<td>{{getGenotype(hdrResult.hdrReport.sequenceResult)}}</td>
+								<td><a
+									ng-click="viewFullReport(fileItemUnderAnalysis, hdrResult.hdrReport.sequenceResult.id, hdrResult)">View <i class="glyphicon glyphicon-link"></i>
+								</a></td>
+							</tr>
+						</tbody>
+					</table>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
