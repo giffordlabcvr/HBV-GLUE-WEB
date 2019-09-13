@@ -154,7 +154,7 @@ scmVersion {
 	        customKey = file(scmCustomKey)
 	    }
 	    tag {
-	        prefix = 'HBV-GLUE'
+	        prefix = 'HBV-GLUE-WEB'
 	    }
     }
 
