@@ -37,7 +37,39 @@ hbvApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
 	
 	var projectBrowserStandardRoutes = projectBrowserStandardRoutesProvider.$get();
 	var projectBrowserURL = "../gluetools-web/www/projectBrowser";
-    $routeProvider.
+	// custom single alignment view
+	$routeProvider.
+    when('/project/reference/:referenceName', {
+	  templateUrl: 'views/hbvReference.html',
+	  controller: 'hbvReferenceCtrl'
+    });
+    // custom alignments view
+	$routeProvider.
+    when('/project/alignment', {
+  	  templateUrl: 'views/hbvAlignments.html',
+  	  controller: 'hbvAlignmentsCtrl'
+      });
+	// custom single alignment view
+	$routeProvider.
+    when('/project/alignment/:alignmentName', {
+	  templateUrl: 'views/hbvAlignment.html',
+	  controller: 'hbvAlignmentCtrl'
+    });
+    // custom sequences view
+	$routeProvider.
+    when('/project/sequence', {
+  	  templateUrl: 'views/hbvSequences.html',
+  	  controller: 'hbvSequencesCtrl'
+      });
+	// custom single sequence view
+	$routeProvider.
+    when('/project/sequence/:sourceName/:sequenceID', {
+	  templateUrl: 'views/hbvSequence.html',
+	  controller: 'hbvSequenceCtrl'
+    });
+
+	
+	$routeProvider.
     when('/hbvFastaAnalysis', {
       templateUrl: '../views/hbvFastaAnalysis.html',
       controller: 'hbvFastaAnalysisCtrl'
@@ -50,6 +82,36 @@ hbvApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
   	  redirectTo: '/home'
     });
 
+    $routeProvider.
+    when('/aboutGlueProject', {
+  	  templateUrl: './views/aboutGlueProject.html',
+  	  controller: 'aboutGlueProjectCtrl'
+    }).
+    when('/versionInfo', {
+  	  templateUrl: './views/versionInfo.html',
+  	  controller: 'versionInfoCtrl'
+    });
+    
+    $routeProvider.
+    when('/howToCite', {
+  	  templateUrl: './modules/home/howToCite.html',
+  	  controller: 'howToCiteCtrl'
+    }).
+    otherwise({
+  	  redirectTo: '/home'
+    });
+
+    $routeProvider.
+    when('/team', {
+  	  templateUrl: './modules/home/team.html',
+  	  controller: 'teamCtrl'
+    }).
+    otherwise({
+  	  redirectTo: '/home'
+    });
+
+	
+	
 }]);
 
 hbvApp.controller('hbvAppCtrl', 
@@ -58,10 +120,21 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.brand = "HBV-GLUE";
 	$scope.homeMenuTitle = "Home";
 	$scope.analysisMenuTitle = "Analysis";
-	$scope.analysisToolMenuTitle = "Genotyping and sequence interpretation";
+	$scope.analysisToolMenuTitle = "Genotyping and Interpretation";
+	$scope.projectBrowserMenuTitle = "Sequence Data";
+	$scope.projectBrowserAlignmentMenuTitle = "NCBI Sequences by Clade";
+	$scope.projectBrowserSequenceMenuTitle = "All NCBI Sequences";
+	$scope.glueProjectMenuTitle = "Offline version";
+	$scope.aboutHbvGlueMenuTitle = "About";
+	$scope.aboutMenuTitle = "About";
+	$scope.teamTitle = "The HBV-GLUE team";
+	$scope.versionInfoTitle = "Version information";
+	$scope.howToCiteTitle = "How to cite";
 	glueWS.setProjectURL("../../../gluetools-ws/project/hbv");
 	glueWS.setAsyncURL("../../../gluetools-ws");
 	glueWebToolConfig.setAnalysisToolURL("../gluetools-web/www/analysisTool");
+	glueWebToolConfig.setAnalysisToolExampleSequenceURL("exampleSequences/fullGenome1.fasta");
+	glueWebToolConfig.setAnalysisToolExampleMsWindowsSequenceURL("exampleSequencesMsWindows/fullGenome1.fasta");
 	glueWebToolConfig.setProjectBrowserURL("../gluetools-web/www/projectBrowser");
 	glueWebToolConfig.setGlueWSURL("../gluetools-web/www/glueWS");
 } ]);

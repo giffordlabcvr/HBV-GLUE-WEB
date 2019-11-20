@@ -1,0 +1,89 @@
+<div ng-show="renderResult">
+	<h2>Sequence {{renderResult.sequence.sequenceID}}</h2>
+	<p>
+		<div ng-repeat="reference in renderResult.sequence.referenceSequence track by $index">
+			Basis of reference sequence: 
+			<a href="#project/reference/{{reference.name}}">
+				{{reference.renderedName}}
+			</a>
+		</div>
+	</p>
+	  <div class="row">
+	    <div class="col-md-6">
+			<h4>Sequence details</h4>	
+			<table class="table table-striped table-bordered">
+				<thead>
+					<col width="50%"/>
+					<col width="50%"/>
+				</thead>
+				<tr>
+					<td><b>NCBI Nucleotide DB Entry</b></td><td><a target="_blank" href="https://www.ncbi.nlm.nih.gov/nuccore/{{renderResult.sequence.sequenceID}}">{{renderResult.sequence.sequenceID}}  <i class="glyphicon glyphicon-link"></i></a></td>
+				</tr>
+				<tr>
+					<td><b>NCBI Entry Creation Date</b></td><td>{{renderResult.sequence.creationDate}}</td>
+				</tr>
+				<tr>
+					<td><b>NCBI Last Update Date</b></td><td>{{renderResult.sequence.updateDate}}</td>
+				</tr>
+				<tr>
+					<td><b>Sequence Length</b></td><td>{{renderResult.sequence.length}}</td>
+				</tr>
+				<tr>
+					<td><b>Patent-related?</b></td><td>{{renderResult.sequence.patentRelated ? "Yes" : "No"}}</td>
+				</tr>
+				<tbody ng-repeat="alignment in renderResult.sequence.alignmentMembership track by $index" ng-show="alignment.constrainingReference">
+					<tr>				
+						<td><b>Clade membership</b></td>
+						<td><a href="#project/alignment/{{alignment.name}}">{{alignment.renderedName}}</a></td>
+					</tr>
+					<tr ng-if="alignment.featureCoverage">
+						<td><b>Coverage of Genome Region</b><br/>based on homology with<br/><a href="#project/reference/{{alignment.constrainingReference.name}}">{{alignment.constrainingReference.renderedName}}</a></td>
+						<td><div ng-repeat="featureCoverage in alignment.featureCoverage track by $index">{{featureCoverage.featureRenderedName}}: {{toFixed(featureCoverage.coveragePct,2)}}%</div></td>
+					</tr>
+				</tbody>
+			</table>
+			<div ng-show="renderResult.sequence.pubmedId">
+				<h4>Reference</h4>
+				<a href="https://www.ncbi.nlm.nih.gov/pubmed/{{renderResult.sequence.pubmedId}}" target="_blank">PubMed {{renderResult.sequence.pubmedId}} <span class="glyphicon glyphicon-link"></span></a>
+			</div>
+		</tr>
+	</table>	
+			
+			
+			
+	    </div>
+	    <div class="col-md-6">
+			<h4>Sample details</h4>
+			<table class="table table-striped table-bordered">
+				<thead>
+					<col width="50%"/>
+					<col width="50%"/>
+				</thead>
+				<tr>
+					<td><b>Isolate ID</b></td><td>{{handleNull(renderResult.sequence.isolate)}}</td>
+				</tr>
+				<tr>
+					<td><b>Host Species</b></td><td><em>{{handleNull(renderResult.sequence.host)}}</em></td>
+				</tr>
+				<tr>
+					<td><b>Collection Year Range</b></td><td>{{handleNull(renderResult.sequence.collectionYearRange)}}</td>
+				</tr>
+				<tr>
+					<td><b>Country of Origin</b></td><td>{{renderResult.sequence.country ? (renderResult.sequence.country+" ("+renderResult.sequence.country_iso+")"):"-"}}</td>
+				</tr>
+				<tr ng-if="renderResult.sequence.country">
+					<td><b>Country Development Status</b></td><td>{{renderDevelopmentStatus(renderResult.sequence)}}</td>
+				</tr>
+				<tr ng-if="renderResult.sequence.placeSampled">
+					<td><b>Place Sampled</b></td><td>{{renderResult.sequence.placeSampled}}</td>
+				</tr>
+				<tr ng-if="renderResult.sequence.country">
+					<td><b>Global Region</b></td><td>{{renderGlobalRegion(renderResult.sequence)}}</td>
+				</tr>
+			</table>	
+	    </div>
+	</div>
+	
+	
+	
+</div>

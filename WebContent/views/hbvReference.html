@@ -1,0 +1,20 @@
+<div ng-show="renderResult" ng-app="projectBrowser">
+	<h2>{{renderResult.reference.renderedName}}</h2>
+	<p>
+		Underlying sequence: 
+		<a href="#project/sequence/{{renderResult.reference.sequence.sourceName}}/{{renderResult.reference.sequence.sequenceID}}">
+		{{renderResult.reference.sequence.sequenceID}}
+		</a>
+	</p>
+		<p>
+			<div ng-repeat="alignment in renderResult.reference.constrainsAlignment track by $index">
+				Reference for clade: 
+				<a href="#project/alignment/{{alignment.name}}">
+					{{alignment.renderedName}}
+				</a>
+			</div>
+		</p>
+		<hr/>
+		<h3>Genome region annotations</h3>
+		<genome-feature-tree feature-tree="featureTree" selected-node="selectedNode"/>		
+</div>

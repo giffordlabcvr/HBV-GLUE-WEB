@@ -1,0 +1,141 @@
+<h2>Offline HBV-GLUE</h2>
+<p>
+The HBV-GLUE resource can be used "offline" to organise and analyse sequence data on a private computer.  
+Offline HBV-GLUE takes the form of a GLUE project build (a linked dataset and set of analysis functions).
+This project build can be loaded into an instance of the GLUE engine. 
+</p>
+<p>
+A certain level of Unix command-line computing experience is required to install and use Offline HBV-GLUE. 
+Please follow the instructions below to set up and use offline HBV-GLUE on your computer. A working installation
+of offline HBV-GLUE is capable of a range of analysis functions. A couple are given below; the 
+<a href="http://glue-tools.cvr.gla.ac.uk">GLUE engine website</a> documents how these functions may be accessed. 
+
+<ol>
+	<li><a ng-click="scrollTo('installGlue')">Install the GLUE engine</a></li>
+	<li><a ng-click="scrollTo('downloadBuild')">Download a HBV-GLUE project build</a></li>
+	<li><a ng-click="scrollTo('installBuild')">Install the project build into the GLUE database</a></li>
+	<li><a ng-click="scrollTo('checkIntegrations')">Check that the MAFFT, RAxML and BLAST+ integrations are working correctly</a></li>
+</ol>
+
+<p>Please contact <a href="mailto:josh.singer@glasgow.ac.uk">Josh Singer</a> or post a question on the 
+<a href="https://groups.google.com/forum/#!forum/glue-support">GLUE support forum</a> with any questions or 
+queries about offline HBV-GLUE</p>
+
+<h3 id="installGlue">Install the GLUE engine</h3>
+
+Please follow the <a href="http://glue-tools.cvr.gla.ac.uk/#/installation">GLUE installation instructions</a>. 
+The BLAST+, MAFFT and RAxML integration steps are required for most uses of Offline HBV-GLUE.
+
+<h3 id="downloadBuild">Download a HBV-GLUE project build</h3>
+
+<p>
+There are two alternative builds for Offline HBV-GLUE. The smaller build includes the minimum set of packages for 
+genotyping. The larger build also includes the NCBI-HBV-GLUE extension, i.e. HBV sequences 
+derived from the NCBI nucleotide database and their metadata.
+</p>	
+<table class="table table-striped table-bordered table-nonfluid">
+	<thead>
+		<colgroup>
+	       <col span="1" style="width: 50%;">
+	       <col span="1" style="width: 50%;">
+	    </colgroup>
+	</thead>
+	<tbody>
+		<tr>
+			<td><b>HBV-GLUE core project</b></td>
+			<td>Download <a href="/hbv_glue_dbs/hbv_glue.sql.gz">hbv_glue.sql.gz</a></td>
+		</tr>
+		<tr>
+			<td><b>HBV-GLUE core project + NCBI-HBV-GLUE extension</b></td>
+			<td>Download <a href="/hbv_glue_dbs/ncbi_hbv_glue.sql.gz">ncbi_hbv_glue.sql.gz</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<h3 id="installBuild">Install the project build into the GLUE database</h3>
+<p>
+<b>Warning:</b> This step will overwrite any data currently in the GLUE database.
+</p>
+<p>
+Unzip the package and load into your MySQL databse using a Unix command line, something like this:
+<div hljs language="bash" no-escape>
+$ gunzip -c ncbi_hbv_glue.sql.gz | /usr/local/mysql/bin/mysql --user=gluetools --password=glue12345 GLUE_TOOLS
+</div>
+</p>
+<p>Start the GLUE command line and use the <code>list project</code> GLUE command to validate that the project installed.</p>
+<p>
+<div hljs language="bash" no-escape>
+<pre>
+% gluetools.sh
+GLUE version 1.0.2
+Mode path: /
+GLUE> list project
++======+=================================================+
+| name |                  description                    |
++======+=================================================+
+| hbv | Core GLUE project for the hepatits B virus (HBV) |
++======+=================================================+
+Projects found: 1</pre>
+</div>
+</p>
+
+<h3 id="checkIntegrations">Check that the MAFFT, RAxML and BLAST+ integrations are working correctly</h3>
+<p>
+We will use the <code>hbvMaxLikelihoodGenotyper</code> module within HBV-GLUE to assign a major and
+minor cladde for a sequence in a FASTA file. This will validate that MAFFT and RAxML are integrated and working correctly. 
+</p>
+<p>
+Download the <a ng-click="downloadExampleSequence()">example sequence file</a> and make sure a copy
+is present inside the directory from which you launched GLUE.</p>
+
+<p>
+Enter the GLUE commands indicated below and check the output.
+<div hljs language="bash" no-escape>
+<pre>
+GLUE> project hbv 
+OK
+Mode path: /project/hbv
+GLUE> module hbvMaxLikelihoodGenotyper genotype file --fileName fullGenome1.fasta
++====================+=======================+=======================+
+|     queryName      | major_cladeFinalClade | minor_cladeFinalClade |
++====================+=======================+=======================+
+| fullGenomeExample1 | AL_Cosmopolitan       | AL_Cosmopolitan_AF1b  |
++====================+=======================+=======================+</pre>
+</div>
+</p>
+<p>
+We will use the <code>hbvSequenceReporter</code> module within HBV-GLUE to translate the P gene of this sequence to amino acids. 
+This step uses BLAST+ to align the sequence with a reference, and so if the step works it validates that BLAST+ is integrated and working correctly.
+ 
+<p>
+Enter the GLUE command indicated below and check the output. Use 'Q' to exit the interactive table.
+<div hljs language="bash" no-escape>
+<pre>
+GLUE> module hbvSequenceReporter amino-acid -i fullGenome1.fasta -r REF_MASTER_NC_001542 -f P -t REF_Cosmopolitan_AF1b_KX148208
++===========+=========+=========+==========+===========+===========+===========+
+|codonLabel | queryNt | acRefNt | codonNts | aminoAcid |definiteAas|possibleAas|
++===========+=========+=========+==========+===========+===========+===========+
+|1          | 1514    | 1514    | ATG      | M         |M          |M          |
+|2          | 1517    | 1517    | AGC      | S         |S          |S          |
+|3          | 1520    | 1520    | AAG      | K         |K          |K          |
+|4          | 1523    | 1523    | ATC      | I         |I          |I          |
+|5          | 1526    | 1526    | TTC      | F         |F          |F          |
+|6          | 1529    | 1529    | GTC      | V         |V          |V          |
+|7          | 1532    | 1532    | AAT      | N         |N          |N          |
+|8          | 1535    | 1535    | CCG      | P         |P          |P          |
+|9          | 1538    | 1538    | AGT      | S         |S          |S          |
+|10         | 1541    | 1541    | GCT      | A         |A          |A          |
+|11         | 1544    | 1544    | ATC      | I         |I          |I          |
+|12         | 1547    | 1547    | AGA      | R         |R          |R          |
+|13         | 1550    | 1550    | GCC      | A         |A          |A          |
+|14         | 1553    | 1553    | GGT      | G         |G          |G          |
+|15         | 1556    | 1556    | CTT      | L         |L          |L          |
+|16         | 1559    | 1559    | GCC      | A         |A          |A          |
+|17         | 1562    | 1562    | GAT      | D         |D          |D          |
+|18         | 1565    | 1565    | CTT      | L         |L          |L          |
+|19         | 1568    | 1568    | GAG      | E         |E          |E          |
++===========+=========+=========+==========+===========+===========+===========+
+Rows 1 to 19 of 298 [F:first, L:last, P:prev, N:next, Q:quit]</pre>
+</div>
+</p>
+ 
