@@ -47,7 +47,7 @@
 			<table class="table table-striped table-bordered">
 				<thead>
 					<th>NCBI Nucleotide ID</th>
-					<th>Major / Minor Clade</th>
+					<th>Genotype / Subgenotype</th>
 					<th>NCBI Entry Creation Date</th>
 					<th>NCBI Last Update Date</th>
 					<th>Sequence Length</th>
@@ -79,7 +79,7 @@
 						<td>{{member['sequence.gb_length']}}</td>
 						<td>{{handleNull(member['sequence.isolate'])}}</td>
 						<td>{{member['sequence.m49_country.display_name'] ? (member['sequence.m49_country.display_name']+" ("+member['sequence.m49_country.id']+")"):"-"}}</td>
-						<td><em>{{handleNull(member['sequence.host'])}}</em></td>
+						<td><em>{{handleNull(member['sequence.host_species'])}}</em></td>
 						<td>{{collectionYearRange(member['sequence.earliest_collection_year'], member['sequence.latest_collection_year'])}}</td>
 						<td ng-show="member['sequence.gb_pubmed_id'] == null">-</td>
 						<td ng-show="member['sequence.gb_pubmed_id'] != null">
