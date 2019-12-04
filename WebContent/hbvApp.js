@@ -82,6 +82,12 @@ hbvApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
   	  redirectTo: '/home'
     });
 
+	$routeProvider.
+    when('/hbvFastaAnalysisAhmedAlessa', {
+      templateUrl: '../views/hbvFastaAnalysisAhmedAlessa.html',
+      controller: 'hbvFastaAnalysisAhmedAlessaCtrl'
+    });
+
     $routeProvider.
     when('/aboutGlueProject', {
   	  templateUrl: './views/aboutGlueProject.html',
