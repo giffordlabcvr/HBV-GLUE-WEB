@@ -307,6 +307,7 @@ hbvApp.controller('hbvFastaAnalysisCtrl',
 								    "comparisonReferenceName": sequenceReport.hbvReport.comparisonRef.refName,
 								    "featureName": featureName,
 								    "queryNucleotides": visualisationHints.queryNucleotides,
+								    "queryRotation": visualisationHints.queryRotationNts,
 								    "queryToTargetRefSegments": visualisationHints.queryToTargetRefSegments,
 								    "queryDetails": visualisationHints.queryDetails
 								  } }
