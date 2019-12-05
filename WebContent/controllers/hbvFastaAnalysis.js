@@ -15,16 +15,16 @@ hbvApp.controller('hbvFastaAnalysisCtrl',
 		    	$scope.displaySection = 'summary';
 				
 		    	$scope.neighbourSlider = {
-		    			  value: 25,
+		    			  value: 10,
 		    			  options: {
 		    			    precision: 2,
 		    			    floor: 0,
 		    			    ceil: 50,
 		    			    hideLimitLabels: true,
 		    			    hidePointerLabels: true,
-		    			    getLegend: function(value, sliderId) { return toFixed(value/100, 1); }, 
+		    			    getLegend: function(value, sliderId) { return toFixed(value/100, 2); }, 
 		    			    step: 1,
-		    			    showTicks: 10,
+		    			    showTicks: 5,
 		    			    keyboardSupport: false,
 		    			  }
 		    			};

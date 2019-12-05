@@ -29,6 +29,9 @@
 					<td><b>Sequence Length</b></td><td>{{renderResult.sequence.length}}</td>
 				</tr>
 				<tr>
+					<td><b>Rightward Rotation</b></td><td>{{handleNull(renderResult.sequence.rotation)}}</td>
+				</tr>
+				<tr>
 					<td><b>Patent-related?</b></td><td>{{renderResult.sequence.patentRelated ? "Yes" : "No"}}</td>
 				</tr>
 				<tbody ng-repeat="alignment in renderResult.sequence.alignmentMembership track by $index" ng-show="alignment.constrainingReference">

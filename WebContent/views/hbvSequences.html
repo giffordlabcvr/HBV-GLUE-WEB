@@ -25,9 +25,9 @@
 					<th>NCBI Entry Creation Date</th>
 					<th>NCBI Last Update Date</th>
 					<th>Sequence Length</th>
+					<th>Rightward Rotation</th>
 					<th>Isolate ID</th>
 					<th>Country of Origin</th>
-					<th>Host Species</th>
 					<th>Collection Year Range</th>
 					<th>Reference</th>
 				</thead>
@@ -35,10 +35,10 @@
 			       <col span="1" style="width: 10%;">
 			       <col span="1" style="width: 8%;">
 			       <col span="1" style="width: 8%;">
+			       <col span="1" style="width: 8%;">
 			       <col span="1" style="width: 6%;">
 			       <col span="1" style="width: 10%;">
-			       <col span="1" style="width: 10%;">
-			       <col span="1" style="width: 12%;">
+			       <col span="1" style="width: 14%;">
 			       <col span="1" style="width: 10%;">
 			       <col span="1" style="width: 14%;">
 				</colgroup>
@@ -48,9 +48,9 @@
 						<td>{{sequenceResult.gb_create_date}}</td>
 						<td>{{sequenceResult.gb_update_date}}</td>
 						<td>{{sequenceResult.gb_length}}</td>
+						<td>{{handleNull(sequenceResult.rotation)}}</td>
 						<td>{{handleNull(sequenceResult.isolate)}}</td>
 						<td>{{sequenceResult["m49_country.display_name"] ? (sequenceResult["m49_country.display_name"]+" ("+sequenceResult["m49_country.id"]+")"):"-"}}</td>
-						<td><em>{{handleNull(sequenceResult.host)}}</em></td>
 						<td>{{collectionYearRange(sequenceResult.earliest_collection_year, sequenceResult.latest_collection_year)}}</td>
 						<td ng-show="sequenceResult.gb_pubmed_id == null">-</td>
 						<td ng-show="sequenceResult.gb_pubmed_id != null">

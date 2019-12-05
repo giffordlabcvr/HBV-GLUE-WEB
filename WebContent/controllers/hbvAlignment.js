@@ -8,6 +8,8 @@ hbvApp.controller('hbvAlignmentCtrl',
 				glueWS: glueWS, 
 				dialogs: dialogs});
 
+			$scope.displaySection = 'memberSequences';
+
 			$scope.init($routeParams.alignmentName, 
 					"hbvAlignmentRenderer", "sequence.source.name = 'ncbi-curated' and referenceMember = false",
 					[
@@ -23,7 +25,7 @@ hbvApp.controller('hbvAlignmentCtrl',
 					 "sequence.gb_length",
 					 "sequence.gb_create_date",
                      "sequence.gb_update_date",
-					 "sequence.host_species",
+					 "sequence.rotation",
                      "sequence.gb_pubmed_id",
 					 "sequence.isolate"
 					 ]);

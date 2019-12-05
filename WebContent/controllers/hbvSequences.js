@@ -21,7 +21,7 @@ projectBrowser.controller('hbvSequencesCtrl',
 					 "gb_length",
 					 "gb_create_date",
                      "gb_update_date",
-					 "host_species",
+					 "rotation",
                      "gb_pubmed_id",
 					 "isolate"] );
 			

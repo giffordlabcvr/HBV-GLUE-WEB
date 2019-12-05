@@ -119,10 +119,11 @@
 						<thead>
 							<tr>
 								<th rowspan="2" style="width: 15%;">Sequence</th>
-								<th rowspan="2" style="width: 10%;">Identified as HBV?</th>
-								<th rowspan="2" style="width: 10%;">Genotype</th>
-								<th rowspan="2" style="width: 10%;">Subgenotype</th>
-								<th rowspan="2" style="width: 15%;">Closest full genome reference sequence</th>
+								<th rowspan="2" style="width: 9%;">Identified as HBV?</th>
+								<th rowspan="2" style="width: 9%;">Rightward Rotation</th>
+								<th rowspan="2" style="width: 9%;">Genotype</th>
+								<th rowspan="2" style="width: 9%;">Subgenotype</th>
+								<th rowspan="2" style="width: 9%;">Closest reference sequence</th>
 								<th colspan="8" rowspan="1" style="width: 40%;">Coding region coverage</th>
 							</tr>
 							<tr>
@@ -142,6 +143,7 @@
 								<td>{{hbvResult.hbvReport.sequenceResult.id}}</td>
 								<td>{{hbvResult.hbvReport.sequenceResult.isForwardHbv ?
 									"Yes" : "No"}}</td>
+								<td>{{handleNull(hbvResult.hbvReport.sequenceResult.rotationNts)}}</td>
 								<td>{{getGenotype(hbvResult.hbvReport.sequenceResult)}}</td>
 								<td>{{getSubgenotype(hbvResult.hbvReport.sequenceResult)}}</td>
 								<td>{{getClosestReferenceSequence(hbvResult.hbvReport.sequenceResult)}}</td>
@@ -276,7 +278,7 @@
 							</p>
 							<p>
 							<div>
-								  Display neighbours within distance of {{toFixed(neighbourSlider.value/1000, 3)}} mean substitutions/site <rzslider class="with-legend" rz-slider-model="neighbourSlider.value" rz-slider-options="neighbourSlider.options"></rzslider>
+								  Display neighbours within distance of {{toFixed(neighbourSlider.value/100, 2)}} mean substitutions/site <rzslider class="with-legend" rz-slider-model="neighbourSlider.value" rz-slider-options="neighbourSlider.options"></rzslider>
 							</div>
 							</p>
 						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3
