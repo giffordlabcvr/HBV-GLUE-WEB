@@ -32,8 +32,9 @@
 			        Download <span class="caret"></span>
 			      </button>
 			      <ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button1">
-					<li role="menuitem" ng-click="downloadSequences('HbvFastaExporter')"><a>Download sequences</a></li>
-					<li role="menuitem" ng-click="downloadAlignment('HbvFastaAlignmentExporter','HbvFastaProteinAlignmentExporter')"><a>Download alignment</a></li>
+					<li role="menuitem" ng-click="downloadSequences('hbvFastaExporter', {suppressRotation: false})"><a>Download sequences (rotated)</a></li>
+					<li role="menuitem" ng-click="downloadSequences('hbvFastaExporter', {suppressRotation: true})"><a>Download sequences (unrotated)</a></li>
+					<li role="menuitem" ng-click="downloadAlignment('hbvFastaAlignmentExporter','hbvFastaProteinAlignmentExporter')"><a>Download alignment</a></li>
 					<li role="menuitem" ng-click="downloadMemberMetadata()"><a>Download metadata</a></li>
 			      </ul>
 				</div>
@@ -91,8 +92,9 @@
 				        Download <span class="caret"></span>
 				      </button>
 				      <ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button2">
-						<li role="menuitem" ng-click="downloadSequences('HbvFastaExporter')"><a>Download sequences</a></li>
-						<li role="menuitem" ng-click="downloadAlignment('HbvFastaAlignmentExporter','HbvFastaProteinAlignmentExporter')"><a>Download alignment</a></li>
+						<li role="menuitem" ng-click="downloadSequences('hbvFastaExporter', {suppressRotation: false})"><a>Download sequences (rotated)</a></li>
+						<li role="menuitem" ng-click="downloadSequences('hbvFastaExporter', {suppressRotation: true})"><a>Download sequences (unrotated)</a></li>
+						<li role="menuitem" ng-click="downloadAlignment('hbvFastaAlignmentExporter','hbvFastaProteinAlignmentExporter')"><a>Download alignment</a></li>
 						<li role="menuitem" ng-click="downloadMemberMetadata()"><a>Download metadata</a></li>
 				      </ul>
 					</div>
