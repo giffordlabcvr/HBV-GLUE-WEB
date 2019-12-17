@@ -67,22 +67,22 @@ $ gunzip -c ncbi_hbv_glue.sql.gz | /usr/local/mysql/bin/mysql --user=gluetools -
 <div hljs language="bash" no-escape>
 <pre>
 % gluetools.sh
-GLUE version 1.0.2
+GLUE version 1.1.66
 Mode path: /
 GLUE> list project
-+======+=================================================+
-| name |                  description                    |
-+======+=================================================+
-| hbv | Core GLUE project for the hepatits B virus (HBV) |
-+======+=================================================+
++======+============================================+
+| name |                description                 |
++======+============================================+
+| hbv  | A GLUE project for Hepatitis B virus (hbv) |
++======+============================================+
 Projects found: 1</pre>
 </div>
 </p>
 
 <h3 id="checkIntegrations">Check that the MAFFT, RAxML and BLAST+ integrations are working correctly</h3>
 <p>
-We will use the <code>hbvMaxLikelihoodGenotyper</code> module within HBV-GLUE to assign a major and
-minor cladde for a sequence in a FASTA file. This will validate that MAFFT and RAxML are integrated and working correctly. 
+We will use the <code>hbvMaxLikelihoodGenotyper</code> module within HBV-GLUE to assign a genotype and
+subgenotype for a sequence in a FASTA file. This will validate that MAFFT and RAxML are integrated and working correctly. 
 </p>
 <p>
 Download the <a ng-click="downloadExampleSequence()">example sequence file</a> and make sure a copy
@@ -96,46 +96,47 @@ GLUE> project hbv
 OK
 Mode path: /project/hbv
 GLUE> module hbvMaxLikelihoodGenotyper genotype file --fileName fullGenome1.fasta
-+====================+=======================+=======================+
-|     queryName      | major_cladeFinalClade | minor_cladeFinalClade |
-+====================+=======================+=======================+
-| fullGenomeExample1 | AL_Cosmopolitan       | AL_Cosmopolitan_AF1b  |
-+====================+=======================+=======================+</pre>
++============+===================+====================+=======================+
+| queryName  | speciesFinalClade | genotypeFinalClade | subgenotypeFinalClade |
++============+===================+====================+=======================+
+| AB014370.1 | AL_MASTER         | AL_A               | AL_A2                 |
++============+===================+====================+=======================+</pre>
 </div>
 </p>
 <p>
-We will use the <code>hbvSequenceReporter</code> module within HBV-GLUE to translate the P gene of this sequence to amino acids. 
+We will use the <code>hbvFastaSequenceReporter</code> module within HBV-GLUE to translate the RT region of this sequence to amino acids. 
 This step uses BLAST+ to align the sequence with a reference, and so if the step works it validates that BLAST+ is integrated and working correctly.
  
 <p>
 Enter the GLUE command indicated below and check the output. Use 'Q' to exit the interactive table.
 <div hljs language="bash" no-escape>
 <pre>
-GLUE> module hbvSequenceReporter amino-acid -i fullGenome1.fasta -r REF_MASTER_NC_001542 -f P -t REF_Cosmopolitan_AF1b_KX148208
-+===========+=========+=========+==========+===========+===========+===========+
-|codonLabel | queryNt | acRefNt | codonNts | aminoAcid |definiteAas|possibleAas|
-+===========+=========+=========+==========+===========+===========+===========+
-|1          | 1514    | 1514    | ATG      | M         |M          |M          |
-|2          | 1517    | 1517    | AGC      | S         |S          |S          |
-|3          | 1520    | 1520    | AAG      | K         |K          |K          |
-|4          | 1523    | 1523    | ATC      | I         |I          |I          |
-|5          | 1526    | 1526    | TTC      | F         |F          |F          |
-|6          | 1529    | 1529    | GTC      | V         |V          |V          |
-|7          | 1532    | 1532    | AAT      | N         |N          |N          |
-|8          | 1535    | 1535    | CCG      | P         |P          |P          |
-|9          | 1538    | 1538    | AGT      | S         |S          |S          |
-|10         | 1541    | 1541    | GCT      | A         |A          |A          |
-|11         | 1544    | 1544    | ATC      | I         |I          |I          |
-|12         | 1547    | 1547    | AGA      | R         |R          |R          |
-|13         | 1550    | 1550    | GCC      | A         |A          |A          |
-|14         | 1553    | 1553    | GGT      | G         |G          |G          |
-|15         | 1556    | 1556    | CTT      | L         |L          |L          |
-|16         | 1559    | 1559    | GCC      | A         |A          |A          |
-|17         | 1562    | 1562    | GAT      | D         |D          |D          |
-|18         | 1565    | 1565    | CTT      | L         |L          |L          |
-|19         | 1568    | 1568    | GAG      | E         |E          |E          |
-+===========+=========+=========+==========+===========+===========+===========+
-Rows 1 to 19 of 298 [F:first, L:last, P:prev, N:next, Q:quit]</pre>
+GLUE> module hbvFastaSequenceReporter amino-acid -i fullGenome1.fasta -r REF_NUMBERING_X02763 -f RT -t REF_A2_EU594385 -a AL_UNCONSTRAINED
++=========+============+=========+==========+============+==========+===========+============+============+
+| feature | codonLabel | queryNt | relRefNt |dependentNts| codonNts | aminoAcid |definiteAas |possibleAas |
++=========+============+=========+==========+============+==========+===========+============+============+
+| RT      | 1          | 130     | 130      |GAG         | GAG      | E         |E           |E           |
+| RT      | 2          | 133     | 133      |GAC         | GAC      | D         |D           |D           |
+| RT      | 3          | 136     | 136      |TGG         | TGG      | W         |W           |W           |
+| RT      | 4          | 139     | 139      |GGA         | GGA      | G         |G           |G           |
+| RT      | 5          | 142     | 142      |CCC         | CCC      | P         |P           |P           |
+| RT      | 6          | 145     | 145      |TGT         | TGT      | C         |C           |C           |
+| RT      | 7          | 148     | 148      |GAC         | GAC      | D         |D           |D           |
+| RT      | 8          | 151     | 151      |GAA         | GAA      | E         |E           |E           |
+| RT      | 9          | 154     | 154      |CAT         | CAT      | H         |H           |H           |
+| RT      | 10         | 157     | 157      |GGA         | GGA      | G         |G           |G           |
+| RT      | 11         | 160     | 160      |GAA         | GAA      | E         |E           |E           |
+| RT      | 12         | 163     | 163      |CAT         | CAT      | H         |H           |H           |
+| RT      | 13         | 166     | 166      |CAC         | CAC      | H         |H           |H           |
+| RT      | 14         | 169     | 169      |ATC         | ATC      | I         |I           |I           |
+| RT      | 15         | 172     | 172      |AGG         | AGG      | R         |R           |R           |
+| RT      | 16         | 175     | 175      |ATT         | ATT      | I         |I           |I           |
+| RT      | 17         | 178     | 178      |CCT         | CCT      | P         |P           |P           |
+| RT      | 18         | 181     | 181      |AGG         | AGG      | R         |R           |R           |
+| RT      | 19         | 184     | 184      |ACC         | ACC      | T         |T           |T           |
+| RT      | 20         | 187     | 187      |CCT         | CCT      | P         |P           |P           |
++=========+============+=========+==========+============+==========+===========+============+============+
+Rows 1 to 20 of 344 [F:first, L:last, P:prev, N:next, Q:quit]
 </div>
 </p>
  
