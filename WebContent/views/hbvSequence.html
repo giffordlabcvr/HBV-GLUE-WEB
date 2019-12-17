@@ -74,9 +74,6 @@
 				<tr>
 					<td><b>Country of Origin</b></td><td>{{renderResult.sequence.country ? (renderResult.sequence.country+" ("+renderResult.sequence.country_iso+")"):"-"}}</td>
 				</tr>
-				<tr ng-if="renderResult.sequence.country">
-					<td><b>Country Development Status</b></td><td>{{renderDevelopmentStatus(renderResult.sequence)}}</td>
-				</tr>
 				<tr ng-if="renderResult.sequence.placeSampled">
 					<td><b>Place Sampled</b></td><td>{{renderResult.sequence.placeSampled}}</td>
 				</tr>
