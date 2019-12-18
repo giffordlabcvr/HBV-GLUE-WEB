@@ -50,6 +50,7 @@ projectBrowser.controller('hbvSequencesCtrl',
 			$scope.pagingContext.setFilterProperties([
            		{ property:"sequenceID", displayName: "NCBI Nucleotide ID", filterHints: {type: "String"} },
           		{ property:"gb_length", displayName: "Sequence Length", filterHints: {type: "Integer"} },
+                { property:"alignmentMemberships+.alignment.minimal_name", displayName: "Genotype / Subgenotype", altProperties:["alignmentMemberships+.alignment.parent.minimal_name"], filterHints: {type: "String"}  },
           		{ property:"gb_create_date", displayName: "NCBI Entry Creation Date", filterHints: {type: "Date"} },
           		{ property:"gb_update_date", displayName: "NCBI Last Update Date", filterHints: {type: "Date"} },
 	            { property:"earliest_collection_year", displayName: "Earliest Collection Year", filterHints: {type: "Integer"} },

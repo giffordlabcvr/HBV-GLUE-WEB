@@ -55,7 +55,7 @@ hbvApp.controller('hbvAlignmentCtrl',
 			$scope.pagingContext.setFilterProperties([
            		{ property:"sequence.sequenceID", displayName: "NCBI Nucleotide ID", filterHints: {type: "String"} },
           		{ property:"sequence.gb_length", displayName: "Sequence Length", filterHints: {type: "Integer"} },
-                { property:"alignment.displayName", displayName: "Genotype / Subgenotype", filterHints: {type: "String"}  },
+                { property:"alignment.minimal_name", displayName: "Genotype / Subgenotype", altProperties:["alignment.parent.minimal_name"], filterHints: {type: "String"}  },
                 $scope.featurePresenceFilter(),
   	            { property:"sequence.m49_country.display_name", nullProperty:"sequence.m49_country", altProperties:["sequence.m49_country.id"], displayName: "Country of Origin", filterHints: {type: "String"} },
   	            $scope.globalRegionFilterM49(),
