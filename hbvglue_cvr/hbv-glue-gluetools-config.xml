@@ -6,8 +6,8 @@
 	</database>
 	<properties>
 		<!-- Scripting -->
-		<!-- In reality the VM has 2 cores. We can overload them effectively because the resistance scanning piece which uses
-		     the parallelism spends a lot of time accessing the DB. So I've put 5 here.
+		<!-- In reality the VM has 2 cores. We can overload them effectively because the resistance scanning piece, which could use
+		      parallelism, spending a lot of time accessing the DB. So I've put 5 here.
 		     
 		     A better design would be for the invocation of the parallelCommands function to specify a load factor. This would get
 		     multiplied by the CPUs setting to give the number of workers created in the executor service thread pool.
