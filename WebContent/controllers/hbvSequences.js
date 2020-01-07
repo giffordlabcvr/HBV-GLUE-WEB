@@ -30,7 +30,7 @@ projectBrowser.controller('hbvSequencesCtrl',
 
 			
 			$scope.pagingContext.setDefaultSortOrder([
-  			    { property: "sequenceID", displayName: "NCBI Nucleotide ID", order: "+" }
+  			    { property: "gb_create_date", displayName: "NCBI Entry Creation Date", order: "-" }
   			]);
 
   			

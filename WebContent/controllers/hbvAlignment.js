@@ -35,7 +35,7 @@ hbvApp.controller('hbvAlignmentCtrl',
 			$scope.initDevelopmentStatusFixedValueSetM49();
 
 			$scope.pagingContext.setDefaultSortOrder([
-			    { property: "sequence.sequenceID", displayName: "NCBI Nucleotide ID", order: "+" }
+			    { property: "sequence.gb_create_date", displayName: "NCBI Entry Creation Date", order: "-" }
 			]);
 	
 			$scope.pagingContext.setSortableProperties([
