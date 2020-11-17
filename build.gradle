@@ -12,8 +12,8 @@ project.version = scmVersion.version
 remotes {
   hbvglue_cvr {
     host = 'hbv-glue.cvr.gla.ac.uk'
-    user = 'sing01j'
-    identity = file('/Users/joshsinger/.ssh/hbv-glue_id_rsa')
+    user = 'ok16n'
+    identity = file('/Users/evdoxiataka/.ssh/hbv_glue_id_rsa')
   }
   
 }
@@ -141,7 +141,7 @@ task deployGluetoolsConfigHbvGlueCVR() {
   }
 }
 
-def scmCustomKey = '/Users/joshsinger/.ssh/github_id_rsa'
+def scmCustomKey = '/Users/evdoxiataka/.ssh/github_id_rsa_old_format'
 
 scmVersion {
 	hooks {
